@@ -4,7 +4,7 @@ import time
 
 
 #The following snippet is taken from http://www.blog.pythonlibrary.org/2010/05/14/how-to-send-email-with-python/
-#The snippet uses the SMTP library that needs to be downloaded into the raspberry pi if it's not done so already for the code to work
+#The snippet uses the SMTP library
 #I have modified the snippet and added a few lines of code to fit our specific needs ~Nazmus
 SUBJECT = "Doorbell Monitor Notification"
 TO = "nshuddha@hotmail.com"
