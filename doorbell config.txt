@@ -1,0 +1,4 @@
+To: youtname@gmail.com
+From: yourname@example.com
+Username: yourname@gmail.com
+Password: password
