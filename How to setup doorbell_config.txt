@@ -1,0 +1,20 @@
+********** GUIDE TO SETTING UP DOORBELL_CONFIG.TXT **********
+This file describes how doorbell_config.txt must be set up so the doorbell monitor program can retrieve the appropriate information in order to send email using Gmail's SMTP server.
+
+***** IMPORTANT SECURITY AND PRIVACY INFORMATION *****
+It is not safe to store passwords in plain text file. You can and will very likely get your account hacked! Use two-factor authentication and an application specefic password. For more information on application specefic passwords and two-factor authentication, search the internet using your favorite search engine.
+DO NOT upload your doorbell_config.txt file on cloud storage without absolutely making sure it is not viewable to the public. In fact, it is best to not upload the file to the inernet at all.
+
+***** FORMATTING DESCRIPTION *****
+The doorbell_config.txt file must have four line of values in specefic order.
+Line 1: Sender's email address (must be a gmail address)
+Line 2: Recipient's email address (can be any email address). This is the person that will be alerted via email when someone rings the doorbell
+Line 3: Username of the sender's email address (likely the same as Sender's email address, but not necessarily)
+Line 4: Password of the sender's email address. If you use two-factor authentication (highly recommended), please create and use an application specefic password.
+
+***** FORMATTING EXAMPLE *****
+The doorbell_config.txt file must be formatted exactly as shown below. Replace the generic values with ones specefic to you:
+youtname@gmail.com
+yourname@example.com
+yourname@gmail.com
+password

@@ -1,0 +1,3 @@
+c:\users\NazmusShakib\Desktop\doorbell_config.txt
+
+The first line if this file must be the correct path to the where you saved your doorbell_config.txt file. All lines below the first line are ignored.
