@@ -15,9 +15,12 @@ Counter variable is outputted to the 7-segment decoder and email is sent to user
 Reset button (input connection to be determined) resets counter to 0, and counter is outputted to 7-segment decoder
 
 ***** FILES *****
-> Doorbell.py: responsible for the entire device logic operation. This file has all the source code you need
-> Email with smtplib.py: ohnly includes the code to send email to the user. This code is already included with Doorbell.py. This file is not needed for the operation of the device
-> sandox.py: python file solely for testing code. It is not needed for the oporation of the device.
+* Doorbell.py: responsible for the entire device logic operation. This file has all the source code you need
+* config_path.txt: this file tells the program where to locate doorbell_config.txt. This file is required for program operation.
+* doorbell_config.txt: this file includes sample gmail SMTP information. User should create a new file with the same name and replace the generic values with their specefic ones. The user_created version can be placed anywhere. Just remember to type the path in the config_path.txt file's first line so the program can locate it. doorbell_config.txt is required for the program's operation.
+* How to use doorbell_config.txt: This file explains how to format the doorbell_config.txt file properly and provides security and privacy information regarding username and password
+* Email with smtplib.py: ohnly includes the code to send email to the user. This code is already included with Doorbell.py. This file is not needed for the operation of the device
+* sandox.py: python file solely for testing code. It is not needed for the oporation of the device.
 
 ***** LINKS *****
 Adafruit 7-segment python library on GitHub: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/master/Adafruit_LEDBackpack/Adafruit_7Segment.py
