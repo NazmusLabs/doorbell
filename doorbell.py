@@ -43,24 +43,29 @@ while True:
 					ada7_ctl.writeDigit(n, count, False)
 					count = count +1
 					
-					#The following snippet is taken from http://www.blog.pythonlibrary.org/2010/05/14/how-to-send-email-with-python/
-					#The snippet uses the SMTP library
+					#The following snippet is the code for using the SMTP library, taken from http://www.blog.pythonlibrary.org/2010/05/14/how-to-send-email-with-python/
+					#It has been modified to work with gmail as outgoing server, courtesy of information provided in http://codecomments.wordpress.com/2008/01/04/python-gmail-smtp-example/
 					#I have modified the snippet and added a few lines of code to fit our specific needs ~Nazmus
+
 					SUBJECT = "Doorbell Monitor Notification"
-					TO = "nshuddha@hotmail.com"
-					FROM = "nazmus@outlook.com"
-					text = "Someone rang your doorbell at" + time.strftime('%Y-%m-%d %H:%M:%S') + "."
+					TO = "nazmus@outlook.com"
+					FROM = "exosphir@gmail.com"
+					text = "Someone rang your doorbell at " + time.strftime('%Y-%m-%d %H:%M:%S') + "."
 					#Leave the following BODY block intact. Only change the values above.
 					BODY = string.join((
-							"From: %s" % FROM,
-							"To: %s" % TO,
-							"Subject: %s" % SUBJECT ,
-							"",
-							text
-							), "\r\n")
-					server = smtplib.SMTP(HOST)
+						"From: %s" % FROM,
+						"To: %s" % TO,
+						"Subject: %s" % SUBJECT ,
+						"",
+						text
+						), "\r\n")
+					server = smtplib.SMTP('smtp.gmail.com', 587)
+					server.ehlo()
+					server.starttls()
+					server.ehlo()
+					server.login('exosphir@gmail.com', 'saieblaquriihphg')
 					server.sendmail(FROM, [TO], BODY)
-					server.quit()
+					server.close()
 					#End of code snippet
 					
 			prev_input = input
