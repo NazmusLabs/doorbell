@@ -1,0 +1,7 @@
+print "hi"
+x = raw_input()
+print x
+
+while True:
+    print "loop"
+    
