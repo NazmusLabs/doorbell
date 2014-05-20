@@ -17,6 +17,7 @@
 
 # ***** LINKS *****
 # Adafruit 7-segment python library on GitHub: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/master/Adafruit_LEDBackpack/Adafruit_7Segment.py
+# Using SMTPLIB with Gmail as outgoing server: http://codecomments.wordpress.com/2008/01/04/python-gmail-smtp-example/
 
 
 #Import modules
@@ -46,7 +47,7 @@ stop = 0
 pause = 0
 display.writeDigit(4, 0, False)
 
-def internet_on():
+def internet_on():			#Checks if email server responds. If no response received, email notification will not be sent.
         try:
                 response=urllib2.urlopen('http://74.125.228.100', timeout=1)
                 return True
