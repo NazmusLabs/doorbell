@@ -1,9 +1,30 @@
+# ********** SOURCE CODE FOR DOORBELL MONITOR (ENGR240) ********** #
+
+
+# ***** DEVICE DESCRIPTION ******
+# The Doorbell Monitor records the time at which the doorbell button was pressed and the number of time it was pressed.
+# It displays the number of time the button was pressed to the 7-segment display
+# It sends an email to the user with the recorded time of the doorbell pressed
+
+
+# ***** CODE DESCRIPTION *****
+# The code is designed to work with the raspberry pi and select Adafruit hardware and associated libraries.
+# The doorbell push button is attached to GPIO pin 17. The 7-segment decoder is attached as output
+# Each time the push button is pressed, the counter variable count up and system time recorded
+# Counter variable is outputted to the 7-segment decoder and email is sent to user with recorded time
+# Reset button (input connection to be determined) resets counter to 0, and counter is outputted to 7-segment decoder
+
+
+# ***** LINKS *****
+# Adafruit 7-segment python library on GitHub: https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/master/Adafruit_LEDBackpack/Adafruit_7Segment.py
+
+
 #Import modules
-import RPi.GPIO as GPIO
-import time
+import RPi.GPIO as GPIO		#Enables the use of the input pins (GPIO)
+import time			#Enables time delays and accessing system clock
 import urllib2
-import smtplib
-import string
+import smtplib			#SMTP library: Internet Mail Transfer protocol. Needed for email
+import string			#Enables the use of strings in variable
 from sys import path
 path.append("/home/pi/doorbell/Adafruit-Raspberry-Pi-Python-Code/Adafruit_LEDBackpack")
 import Adafruit_7Segment
@@ -11,8 +32,8 @@ import Adafruit_LEDBackpack
 
 #Set-up and variables
 GPIO.setmode (GPIO.BCM)
-GPIO.setup (17,GPIO.IN)
-GPIO.setup (22,GPIO.IN)
+GPIO.setup (17,GPIO.IN)		#Sets pin 17 as an input pin (Used for doorbell push button)
+GPIO.setup (22,GPIO.IN)		#Sets pin 22 as an input pin (Used for reset button)
 display = Adafruit_7Segment.SevenSegment()
 reset = Adafruit_LEDBackpack.LEDBackpack()
 count = 0
@@ -32,8 +53,13 @@ def internet_on():
         except urllib2.URLError as err: pass
         return False
         
-def send_email():
-        configFile = open('c:\users\NazmusShakib\Desktop\doorbell config.txt','r')
+def send_email():\
+#The following snippet is the code for using the SMTP library, taken from http://www.blog.pythonlibrary.org/2010/05/14/how-to-send-email-with-python/
+#It has been modified to work with gmail as outgoing server, courtesy of information provided in http://codecomments.wordpress.com/2008/01/04/python-gmail-smtp-example/
+#The function makes use of an external text file which contain email account information, including username and password (or application specefic password if two-step authentication is enabled)
+#Please see documentation for information on how to set up the config file. You may also refer to the dedicated text file avilable on this program directory
+
+        configFile = open('c:\users\NazmusShakib\Desktop\doorbell_config.txt','r')	#IMPORTANT: Replace this directory to the directory where the doorbell_config.txt file is located
         lineCount = 0
         for line in configFile:
                 lineCount = lineCount + 1
@@ -74,8 +100,9 @@ def send_email():
         server.sendmail(FROM, [TO], BODY)
         server.close()
 
-while stop == 0:
-        if wait == 0:
+while stop == 0:		#The program will continuously loop until the user invokes the Hardware Stop button, wich turns the "stop" variable to 1
+        if wait == 0:		#Time Delay (See documentation)
+        	#The following code will set the seven-segment display
                 if (GPIO.input(17)):
                     dig_1 += 1
                     
@@ -95,7 +122,7 @@ while stop == 0:
                                     display.writeDigit(1, dig_3, False)              
                             display.writeDigit(3, dig_2, False)
                     display.writeDigit(4, dig_1, False)
-
+	#This controls the time delay
                     wait = 1
                     pause = time.time()
                     if internet_on() is True:
@@ -104,6 +131,7 @@ while stop == 0:
         if time.time() > pause + 10:
                 wait = 0
         
+        #This code runs if the reset button is pushed
         if (GPIO.input(22)):
                 display.writeDigitRaw(3, 0)
                 display.writeDigitRaw(1, 0)
@@ -113,6 +141,8 @@ while stop == 0:
                 dig_3 = 0
                 dig_4 = 0
                 display.writeDigit(4, 0, False)
+                
+                wait = 0	#Resets time delay
                 
                 #Kill switch: Hold reset for 5s
                 holdReset = time.time()
